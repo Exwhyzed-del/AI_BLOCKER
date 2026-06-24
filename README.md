@@ -26,7 +26,8 @@ AI_BLOCKER/
 │   ├── manage-ide-extensions.ps1  # Removes AI extensions from VS Code
 │   ├── restrict-ai-in-wsl-vm.ps1  # Blocks AI inside WSL/VMs
 │   ├── monitor.ps1          # Persistent monitor (kills AI processes every 1 sec)
-│   └── unblock-everything.ps1  # Removes ALL restrictions
+│   ├── unblock-everything.ps1  # Removes ALL restrictions
+│   └── UNBLOCK_ME.bat          # Easy one-click unblock (right-click → Run as admin)
 └── README.md              # This file!
 ```
 
@@ -81,6 +82,9 @@ cd c:\path\to\AI_BLOCKER\deploy
 (leave this PowerShell window open!)
 
 ### 7. UNBLOCK EVERYTHING
+**Easiest way:** Right-click `deploy/UNBLOCK_ME.bat` → Run as administrator
+
+Or manually:
 ```powershell
 cd c:\path\to\AI_BLOCKER\deploy
 .\unblock-everything.ps1
