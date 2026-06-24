@@ -18,6 +18,7 @@ $aiKeywords = @(
     "cursor",
     "windsurf",
     "codestory",
+    "codesnap",
     "replit",
     "huggingface",
     "mistral",
@@ -60,7 +61,40 @@ $aiKeywords = @(
     "oobabooga",
     "gpt",
     "llm",
-    "ai"
+    "ai",
+    "assistant",
+    "bot",
+    "antigravity",
+    "cody",
+    "ghostwriter",
+    "sourcery",
+    "mutable",
+    "codepen",
+    "codesandbox",
+    "codewhisperer",
+    "amazonq",
+    "amazon-q",
+    "sider",
+    "tactiq",
+    "glasp",
+    "merlin",
+    "monica",
+    "chatpdf",
+    "doctrina",
+    "filechat",
+    "quillbot",
+    "grammarly",
+    "wordtune",
+    "jasper",
+    "copy.ai",
+    "writesonic",
+    "rytr",
+    "frase",
+    "outranking",
+    "surfer",
+    "clearscope",
+    "marketmuse",
+    "marketbrew"
 )
 
 # Specific Copilot and AI API endpoints
@@ -85,7 +119,10 @@ $specificAiEndpoints = @(
     "gateway.ai.cloudflare.com",
     "api.cohere.ai",
     "api.mistral.ai",
-    "api.stability.ai"
+    "api.stability.ai",
+    "api.antigravity.com",
+    "antigravity.ai",
+    "api.antigravity.ai"
 )
 
 Write-Host "AI Prevention Platform - Website Blocker" -ForegroundColor Cyan
@@ -110,7 +147,7 @@ $hostsLines = Get-Content -Path $hostsPath
 $hostsLinesLower = $hostsLines | ForEach-Object { $_.ToLower() }
 
 # Generate all AI domain entries
-$commonTlds = @(".com", ".ai", ".io", ".dev", ".org", ".net", ".co", ".so", ".sh", ".cn")
+$commonTlds = @(".com", ".ai", ".io", ".dev", ".org", ".net", ".co", ".so", ".sh", ".cn", ".app", ".xyz", ".tech")
 $newEntries = @()
 
 # Add keyword-based entries

@@ -33,7 +33,17 @@ $aiKeywords = @(
     "cohere",
     "ai",
     "assistant",
-    "bot"
+    "bot",
+    "antigravity",
+    "codewhisperer",
+    "amazonq",
+    "amazon-q",
+    "sider",
+    "tactiq",
+    "glasp",
+    "merlin",
+    "monica",
+    "chatpdf"
 )
 
 # VS Code Extensions - try to remove via code CLI if available
@@ -53,7 +63,7 @@ foreach ($path in $codePaths) {
 
 # First try to uninstall via VS Code CLI
 if ($codeExe) {
-    Write-Host "Trying to uninstall Copilot via VS Code CLI..." -ForegroundColor Yellow
+    Write-Host "Trying to uninstall AI extensions via VS Code CLI..." -ForegroundColor Yellow
     & $codeExe --uninstall-extension GitHub.copilot 2>$null
     & $codeExe --uninstall-extension GitHub.copilot-chat 2>$null
     & $codeExe --uninstall-extension GitHub.copilot-labs 2>$null
@@ -110,11 +120,16 @@ try {
 }
 
 # Also modify VS Code workspace storage to disable Copilot
-Write-Host "`nCleaning VS Code Copilot storage..." -ForegroundColor Cyan
+Write-Host "`nCleaning VS Code AI extension storage..." -ForegroundColor Cyan
 $vscodeStoragePath = "$env:APPDATA\Code\User\globalStorage"
 if (Test-Path $vscodeStoragePath) {
     $copilotFolders = Get-ChildItem -Path $vscodeStoragePath -Directory -ErrorAction SilentlyContinue | Where-Object {
-        $_.Name -like "*copilot*"
+        foreach ($keyword in $aiKeywords) {
+            if ($_.Name -like "*$keyword*") {
+                return $true
+            }
+        }
+        return $false
     }
     foreach ($folder in $copilotFolders) {
         Write-Host "Deleting: $($folder.Name)" -ForegroundColor Red

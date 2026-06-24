@@ -42,7 +42,32 @@ $aiKeywords = @(
     "ai",
     "assistant",
     "bot",
-    "model"
+    "model",
+    "antigravity",
+    "codewhisperer",
+    "amazonq",
+    "amazon-q",
+    "sider",
+    "tactiq",
+    "glasp",
+    "merlin",
+    "monica",
+    "chatpdf",
+    "doctrina",
+    "filechat",
+    "quillbot",
+    "grammarly",
+    "wordtune",
+    "jasper",
+    "copy.ai",
+    "writesonic",
+    "rytr",
+    "frase",
+    "outranking",
+    "surfer",
+    "clearscope",
+    "marketmuse",
+    "marketbrew"
 )
 
 while ($true) {
@@ -58,5 +83,5 @@ while ($true) {
             }
         }
     }
-    Start-Sleep -Seconds 2
+    Start-Sleep -Seconds 1  # Check every 1 second!
 }

@@ -4,7 +4,7 @@
 # WARNING: Run as Administrator!
 
 Write-Host "AI Prevention Platform - AI Blocking in WSL/VMs" -ForegroundColor Cyan
-Write-Host "=================================================" -ForegroundColor Cyan
+Write-Host "==========================================" -ForegroundColor Cyan
 
 # Check admin
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
@@ -16,7 +16,7 @@ if (-not $isAdmin) {
 Write-Host "`nNOT disabling WSL or VMs!" -ForegroundColor Green
 Write-Host "Only blocking AI usage inside them..." -ForegroundColor Cyan
 
-# AI keywords to use for blocking
+# AI keywords to block ANY domain
 $aiKeywords = @(
     "chatgpt",
     "openai",
@@ -24,6 +24,7 @@ $aiKeywords = @(
     "anthropic",
     "gemini",
     "copilot",
+    "githubcopilot",
     "codeium",
     "tabnine",
     "kite",
@@ -31,6 +32,8 @@ $aiKeywords = @(
     "cursor",
     "windsurf",
     "codestory",
+    "codesnap",
+    "replit",
     "huggingface",
     "mistral",
     "stability",
@@ -46,11 +49,27 @@ $aiKeywords = @(
     "ollama",
     "localai",
     "llama",
+    "lmstudio",
+    "gpt4all",
+    "koboldai",
+    "oobabooga",
     "gpt",
     "llm",
-    "ai"
+    "ai",
+    "assistant",
+    "bot",
+    "antigravity",
+    "codewhisperer",
+    "amazonq",
+    "amazon-q",
+    "sider",
+    "tactiq",
+    "glasp",
+    "merlin",
+    "monica",
+    "chatpdf"
 )
-$commonTlds = @(".com", ".ai", ".io", ".dev", ".org", ".net", ".co")
+$commonTlds = @(".com", ".ai", ".io", ".dev", ".org", ".net", ".co", ".so", ".sh", ".cn", ".app", ".xyz", ".tech")
 
 # Try to block AI domains inside all running WSL distros
 Write-Host "`nChecking for running WSL distros..." -ForegroundColor Cyan
@@ -65,9 +84,9 @@ try {
                 foreach ($keyword in $aiKeywords) {
                     foreach ($tld in $commonTlds) {
                         $domain = "$keyword$tld"
-                        $cmd = "echo '127.0.0.1 $domain' | sudo tee -a /etc/hosts > /dev/null"
+                        $cmd = "echo '127.0.0.1 $domain' | sudo tee -a /etc/hosts > /dev/null 2>&1"
                         wsl -d $distroName -- bash -c $cmd 2>$null
-                        $cmdWWW = "echo '127.0.0.1 www.$domain' | sudo tee -a /etc/hosts > /dev/null"
+                        $cmdWWW = "echo '127.0.0.1 www.$domain' | sudo tee -a /etc/hosts > /dev/null 2>&1"
                         wsl -d $distroName -- bash -c $cmdWWW 2>$null
                     }
                 }
