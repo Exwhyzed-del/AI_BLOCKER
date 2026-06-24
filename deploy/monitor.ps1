@@ -12,7 +12,7 @@ Write-Host ""
 Write-Host "Press **CTRL + C** at ANY time to stop the monitor!" -ForegroundColor Yellow
 Write-Host "Or just close this window!" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "Monitoring for AI processes... (checking every 0.5 seconds)" -ForegroundColor Cyan
+Write-Host "Monitoring for AI processes... (checking every 0.25 seconds)" -ForegroundColor Cyan
 Write-Host ""
 
 # AI keywords to block ANY process - SUPER AGGRESSIVE!
@@ -54,6 +54,8 @@ $aiKeywords = @(
     "bot",
     "model",
     "antigravity",
+    "antigravity ide",
+    "agent-tool-host",
     "codewhisperer",
     "amazonq",
     "amazon-q",
@@ -108,7 +110,7 @@ try {
                 }
             }
         }
-        Start-Sleep -Milliseconds 500  # Check every 0.5 seconds!
+        Start-Sleep -Milliseconds 250  # Check every 0.25 seconds!
     }
 } finally {
     Write-Host ""
