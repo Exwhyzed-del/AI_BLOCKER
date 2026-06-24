@@ -12,8 +12,10 @@ Write-Host ""
 Write-Host "Press **CTRL + C** at ANY time to stop the monitor!" -ForegroundColor Yellow
 Write-Host "Or just close this window!" -ForegroundColor Yellow
 Write-Host ""
+Write-Host "Monitoring for AI processes... (checking every 0.5 seconds)" -ForegroundColor Cyan
+Write-Host ""
 
-# AI keywords to block ANY process
+# AI keywords to block ANY process - SUPER AGGRESSIVE!
 $aiKeywords = @(
     "chatgpt",
     "openai",
@@ -84,19 +86,29 @@ try {
         $allProcesses = Get-Process -ErrorAction SilentlyContinue
         foreach ($proc in $allProcesses) {
             $procName = $proc.ProcessName.ToLower()
+            $procPath = ""
+            try {
+                $procPath = $proc.MainModule.FileName.ToLower()
+            } catch {}
+            
+            $killIt = $false
             foreach ($keyword in $aiKeywords) {
-                if ($procName -like "*$keyword*") {
-                    Write-Host "[$(Get-Date -Format 'HH:mm:ss')] DETECTED & STOPPED: $($proc.ProcessName)" -ForegroundColor Red
-                    try {
-                        Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
-                    } catch {
-                        # Ignore errors if process already stopped
-                    }
+                if ($procName -like "*$keyword*" -or $procPath -like "*$keyword*") {
+                    $killIt = $true
                     break
                 }
             }
+            
+            if ($killIt) {
+                Write-Host "[$(Get-Date -Format 'HH:mm:ss')] DETECTED & STOPPED: $($proc.ProcessName)" -ForegroundColor Red
+                try {
+                    Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+                } catch {
+                    # Ignore errors if process already stopped
+                }
+            }
         }
-        Start-Sleep -Seconds 1  # Check every 1 second!
+        Start-Sleep -Milliseconds 500  # Check every 0.5 seconds!
     }
 } finally {
     Write-Host ""
