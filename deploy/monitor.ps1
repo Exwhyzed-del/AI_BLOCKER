@@ -1,9 +1,17 @@
 # AI Prevention Platform - Persistent Monitor
 # Kills ANY process with AI keywords!
-# Runs continuously in background
+# Runs continuously in background - EASY TO STOP!
 
-Write-Host "AI Prevention Platform - Persistent Monitor" -ForegroundColor Cyan
-Write-Host "Kills ANY process with AI keywords! Press Ctrl+C to stop." -ForegroundColor Cyan
+# Clear the console for clean look
+Clear-Host
+
+Write-Host "=============================================" -ForegroundColor Cyan
+Write-Host "   AI Prevention Platform - Monitor Mode" -ForegroundColor Cyan
+Write-Host "=============================================" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "Press **CTRL + C** at ANY time to stop the monitor!" -ForegroundColor Yellow
+Write-Host "Or just close this window!" -ForegroundColor Yellow
+Write-Host ""
 
 # AI keywords to block ANY process
 $aiKeywords = @(
@@ -70,18 +78,30 @@ $aiKeywords = @(
     "marketbrew"
 )
 
-while ($true) {
-    # Get ALL running processes
-    $allProcesses = Get-Process -ErrorAction SilentlyContinue
-    foreach ($proc in $allProcesses) {
-        $procName = $proc.ProcessName.ToLower()
-        foreach ($keyword in $aiKeywords) {
-            if ($procName -like "*$keyword*") {
-                Write-Host "[$(Get-Date -Format 'HH:mm:ss')] DETECTED & STOPPED: $($proc.ProcessName)" -ForegroundColor Red
-                Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
-                break
+try {
+    while ($true) {
+        # Get ALL running processes
+        $allProcesses = Get-Process -ErrorAction SilentlyContinue
+        foreach ($proc in $allProcesses) {
+            $procName = $proc.ProcessName.ToLower()
+            foreach ($keyword in $aiKeywords) {
+                if ($procName -like "*$keyword*") {
+                    Write-Host "[$(Get-Date -Format 'HH:mm:ss')] DETECTED & STOPPED: $($proc.ProcessName)" -ForegroundColor Red
+                    try {
+                        Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
+                    } catch {
+                        # Ignore errors if process already stopped
+                    }
+                    break
+                }
             }
         }
+        Start-Sleep -Seconds 1  # Check every 1 second!
     }
-    Start-Sleep -Seconds 1  # Check every 1 second!
+} finally {
+    Write-Host ""
+    Write-Host "=============================================" -ForegroundColor Green
+    Write-Host "   Monitor stopped successfully!" -ForegroundColor Green
+    Write-Host "=============================================" -ForegroundColor Green
+    Write-Host ""
 }
