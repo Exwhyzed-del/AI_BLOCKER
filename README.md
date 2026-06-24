@@ -31,6 +31,35 @@ AI_BLOCKER/
 └── README.md              # This file!
 ```
 
+---
+
+## 🚨 HOW TO START & STOP (EASY!)
+
+### 🚀 TO START THE BLOCKER:
+1. **Open PowerShell as ADMINISTRATOR**
+2. Go to the deploy folder and run:
+   ```powershell
+   cd c:\path\to\AI_BLOCKER\deploy
+   .\test-demo.ps1
+   ```
+3. **Start the Monitor (CRITICAL!)** - Open ANOTHER PowerShell as ADMIN and run:
+   ```powershell
+   cd c:\path\to\AI_BLOCKER\deploy
+   .\monitor.ps1
+   ```
+   (Leave this window open!)
+
+### 🛑 TO STOP THE BLOCKER:
+1. **Stop the Monitor**: Go to the monitor window and press **CTRL + C** OR just close the window
+2. **Unblock Everything**: Open PowerShell as ADMIN and run:
+   ```powershell
+   cd c:\path\to\AI_BLOCKER\deploy
+   .\unblock-everything.ps1
+   ```
+   OR right-click `UNBLOCK_ME.bat` → Run as Administrator!
+
+---
+
 ## 🚀 Quick Start (Easiest Way)
 1. **Right-click `deploy/RUN_ME_AS_ADMIN.bat` → Run as administrator**
 2. Done! Now open **another PowerShell as administrator** and run:
